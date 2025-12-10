@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Contract } from '@/lib/temp-storage'
 // import { prisma } from '@/lib/prisma'
 
 async function getContracts() {
@@ -54,7 +55,7 @@ export default async function ContractsPage() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {contracts.map((contract) => (
+              {contracts.map((contract: Contract) => (
                 <tr key={contract.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">

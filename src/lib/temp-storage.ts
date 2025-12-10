@@ -11,6 +11,12 @@ export interface User {
   updatedAt: string;
 }
 
+export interface Signature {
+  id: string;
+  data: string;
+  signedAt: string;
+}
+
 export interface Contract {
   id: string;
   title: string;
@@ -28,7 +34,7 @@ export interface Contract {
     role: string;
   };
   signedBy?: any;
-  signatures?: any[];
+  signatures?: Signature[];
 }
 
 export const users: User[] = [];

@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { signIn, getSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
-export default function SignIn() {
+function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +26,27 @@ export default function SignIn() {
     if (result?.error) {
       setError("Invalid credentials");
     } else {
-      router.push("/");
+      // Redirect based on role or to dashboard
+      if (role === "employer") {
+        router.push("/consultation");
+      } else if (role === "seeker") {
+        router.push("/profile");
+      } else {
+        router.push("/");
+      }
     }
+  };
+
+  const getRoleTitle = () => {
+    if (role === "employer") return "Employer Sign In";
+    if (role === "seeker") return "Job Seeker Sign In";
+    return "Sign In";
+  };
+
+  const getRoleDescription = () => {
+    if (role === "employer") return "Access your employer dashboard to post jobs and manage applications";
+    if (role === "seeker") return "Sign in to upload your resume and apply to jobs";
+    return "Sign in to your account";
   };
 
   return (
@@ -32,8 +54,11 @@ export default function SignIn() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
+            {getRoleTitle()}
           </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            {getRoleDescription()}
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
@@ -83,8 +108,28 @@ export default function SignIn() {
               Sign in
             </button>
           </div>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                href={`/auth/signup?role=${role || ""}`}
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Sign up
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInForm />
+    </Suspense>
   );
 }

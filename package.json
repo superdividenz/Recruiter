@@ -5,17 +5,20 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "eslint",
     "db:seed": "tsx seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.5.0",
     "next": "16.0.7",
     "next-auth": "^4.24.13",
     "pdf-lib": "^1.17.1",
     "pdf-parse": "^2.4.5",
+    "pg": "^8.16.3",
     "prisma": "^5.22.0",
     "puppeteer": "^24.32.0",
     "react": "19.2.0",

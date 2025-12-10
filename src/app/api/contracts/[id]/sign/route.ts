@@ -37,10 +37,3 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ error: 'Failed to sign contract' }, { status: 500 })
   }
 }
-
-    return NextResponse.json({ success: true, contract })
-  } catch (error) {
-    console.error('Error signing contract:', error)
-    return NextResponse.json({ error: 'Failed to sign contract' }, { status: 500 })
-  }
-}

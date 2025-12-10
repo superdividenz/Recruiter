@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { Signature } from '@/lib/temp-storage'
 // import { prisma } from '@/lib/prisma'
 
 interface ContractPageProps {
@@ -96,7 +97,7 @@ export default async function ContractPage({ params }: ContractPageProps) {
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold mb-4">Signatures</h2>
             <div className="space-y-4">
-              {contract.signatures.map((signature) => (
+              {contract.signatures.map((signature: Signature) => (
                 <div key={signature.id} className="border rounded p-4">
                   <p className="text-sm text-gray-600">
                     Signed on {new Date(signature.signedAt).toLocaleDateString()} at {new Date(signature.signedAt).toLocaleTimeString()}
